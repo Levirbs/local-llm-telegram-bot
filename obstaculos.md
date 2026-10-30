@@ -1,6 +1,8 @@
 # 🚧 Obstáculos e Aprendizados de Engenharia
 
-Este documento registra os principais desafios de engenharia de software, limitações de hardware e trade-offs encontrados durante a construção do bot de Telegram integrado a LLMs e VLMs locais via Ollama.
+> **Retrospectiva técnica detalhando gargalos de hardware, problemas de arquitetura e trade-offs encontrados durante a construção de um bot de Telegram multimodal, seguro e 100% offline utilizando LLMs/VLMs locais.**
+
+[🇺🇸 Read in English](CHALLENGES.md)
 
 ---
 

@@ -1,6 +1,8 @@
 # 🤖 local-llm-telegram-bot
 
-> **Interface conversacional e multimodal para modelos de linguagem e visão (LLMs/VLMs) executados 100% localmente via Ollama com Telegram, SQLite assíncrono e Whisper offline.**
+> **Conversational and multimodal interface for Large Language & Vision Models (LLMs/VLMs) running 100% locally via Ollama with Telegram, asynchronous SQLite, and offline Whisper.**
+
+[🇧🇷 Leia em Português](README.pt-BR.md)
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
 [![Telegram Bot API](https://img.shields.io/badge/Telegram_Bot_API-v20%2B-2CA5E0?logo=telegram)](https://python-telegram-bot.org/)
@@ -10,230 +12,231 @@
 
 ---
 
-## 🎯 Propósito do Projeto
+## 🎯 Project Purpose
 
-O **local-llm-telegram-bot** foi projetado para transformar o seu aplicativo do Telegram em uma interface móvel e direta para os seus modelos de inteligência artificial rodando na sua própria máquina (via **Ollama**), eliminando a dependência de APIs pagas da OpenAI, Anthropic ou Google.
+The **local-llm-telegram-bot** transforms your Telegram app into a private, mobile, and direct interface for AI models running on your own hardware via **Ollama**, eliminating all dependencies on proprietary, paid APIs (such as OpenAI, Anthropic, or Google).
 
-### Por que rodar localmente pelo Telegram?
-* 🔒 **Privacidade e Soberania de Dados:** Suas conversas, arquivos, imagens e áudios nunca saem da sua infraestrutura local.
-* 💸 **Custo Zero de Tokens:** Uso ilimitado sem cobranças por requisição ou assinaturas mensais.
-* 📱 **Mobilidade Total:** Acesse o poder de modelos como **Llama 3.2 Vision (11B)** ou **Qwen 2.5 (14B)** direto do seu celular, tablet ou desktop pelo Telegram.
-* 🧠 **Isolamento de Contexto:** Múltiplas sessões de trabalho separadas no SQLite para diferentes projetos (ex: programação, estudos, geral).
+### Why run locally through Telegram?
+* 🔒 **Data Sovereignty & Absolute Privacy:** Your prompts, files, images, and voice messages never leave your local infrastructure.
+* 💸 **Zero Token Fees:** Unlimited requests and generations without subscriptions or per-call billing.
+* 📱 **Everywhere Access:** Harness powerful open weights like **Llama 3.2 Vision (11B)** or **Qwen 2.5 (14B)** straight from your smartphone, tablet, or desktop over Telegram.
+* 🧠 **Session & Context Isolation:** Manage independent conversation workspaces stored in SQLite (e.g., coding, research, general).
 
 ---
 
-## ⚡ Funcionalidades
+## ⚡ Key Features
 
-| Recurso | Descrição |
+| Feature | Description |
 |---|---|
-| 👁️ **Visão Multimodal** | Envie fotos no chat (com ou sem legenda) para análise visual pelo `llama3.2-vision:11b`. |
-| 🎙️ **Transcrição de Voz Offline** | Áudios e notas de voz são transcritos localmente pelo `faster-whisper` e injetados no chat. |
-| 🗄️ **Gestão de Sessões (SQLite)** | Histórico persistido por sessão isolada com suporte a criar, alternar, listar, renomear e apagar. |
-| 🔐 **Autenticação e Segurança** | O bot é estritamente privado. Requer senha master (SHA-256) configurada no `.env` para liberar o uso. |
-| 📁 **Extração de Código e Arquivos** | Blocos de código gerados pela IA são salvos e enviados automaticamente como arquivos para download. |
-| 🧹 **Limpeza Física Compulsória** | Garantia estrutural em `try...finally` com `os.remove()` para destruir todo rastro temporário em disco. |
-| 🗣️ **Roteamento Semântico** | Entende linguagem natural para planejar rotinas e executar tarefas sem comandos rígidos. |
+| 👁️ **Multimodal Computer Vision** | Send photos and diagrams (with or without captions) for deep visual reasoning powered by `llama3.2-vision:11b`. |
+| 🎙️ **Offline Voice Transcription** | Voice notes and audio files are transcribed locally via `faster-whisper` and injected into the conversation stream. |
+| 🗄️ **Async Session Management (SQLite)** | Persistent per-session context isolation: create, switch, list, rename, and delete conversation history. |
+| 🔐 **Private Authentication Layer** | Password-protected bot. Requires a master security password (hashed with SHA-256) defined in `.env` before granting access. |
+| 📁 **Code Extraction & File Dispatch** | AI-generated code snippets are automatically parsed, saved as standalone files, and sent as downloadable attachments. |
+| 🧹 **Compulsory File Cleanup** | Structured `try...finally` resource lifecycle guarantees immediate disk deletion (`os.remove()`) for zero residual footprint. |
+| 🗣️ **Semantic Intent Routing** | Natural language pre-processing dynamically routes requests (e.g., planning routines) without rigid slash commands. |
 
 ---
 
-## 🛠️ Pré-requisitos
+## 🛠️ Prerequisites
 
-1. **Python 3.10 ou superior** instalado na máquina.
-2. **Ollama** instalado e em execução ([ollama.com](https://ollama.com)).
-3. Uma conta ativa no **Telegram**.
+1. **Python 3.10 or newer** installed.
+2. **Ollama** installed and running locally ([ollama.com](https://ollama.com)).
+3. An active **Telegram** account.
 
 ---
 
-## 🚀 Passo a Passo: Como Colocar no Ar
+## 🚀 Step-by-Step Setup Guide
 
-Siga as etapas abaixo para configurar e iniciar o assistente do zero:
+Follow the workflow below to set up and start your private AI bot:
 
 ```mermaid
 flowchart LR
-    A["1. Criar Bot no @BotFather"] --> B["2. Configurar .env"]
-    B --> C["3. Subir Modelo no Ollama"]
-    C --> D["4. Instalar Dependências"]
-    D --> E["5. Rodar python app.py"]
-    E --> F["6. Autenticar com a Senha"]
+    A["1. Create Bot on @BotFather"] --> B["2. Configure .env"]
+    B --> C["3. Start Model on Ollama"]
+    C --> D["4. Install Dependencies"]
+    D --> E["5. Run python app.py"]
+    E --> F["6. Unlock via Master Password"]
 ```
 
-### 1. Criar o Bot no @BotFather e Pegar o Token
-1. No seu aplicativo do Telegram, procure pelo usuário oficial **[@BotFather](https://t.me/BotFather)**.
-2. Inicie a conversa e digite o comando:
+### 1. Create a Bot on @BotFather and Obtain Token
+1. Open your Telegram client and search for the official **[@BotFather](https://t.me/BotFather)**.
+2. Start the chat and send the command:
    ```text
    /newbot
    ```
-3. O BotFather solicitará:
-   * Um **nome de exibição** para o assistente (ex: `Meu Assistente Local`).
-   * Um **username** exclusivo terminado em `bot` (ex: `meu_local_ia_bot`).
-4. Ao finalizar, o BotFather exibirá o seu **HTTP API Token** (formato: `123456789:ABCDefghIJKLmnOPQRstuvWXYZ`). **Copie este token.**
+3. Follow the prompts:
+   * Provide a **display name** for your bot (e.g., `My Local AI Assistant`).
+   * Provide a unique **username** ending with `bot` (e.g., `my_local_ai_bot`).
+4. BotFather will provide your **HTTP API Token** (format: `123456789:ABCDefghIJKLmnOPQRstuvWXYZ`). **Copy this token.**
 
 ---
 
-### 2. Configurar as Variáveis de Ambiente (`.env`)
-No diretório raiz do projeto, crie o seu arquivo `.env` a partir do modelo de exemplo:
+### 2. Configure Environment Variables (`.env`)
+In the root directory of the repository, create your `.env` file from the provided template:
 
 ```bash
 # Windows (PowerShell)
 Copy-Item .env.example .env
 
-# Linux ou macOS
+# Linux or macOS
 cp .env.example .env
 ```
 
-Abra o arquivo `.env` gerado e preencha as variáveis:
+Open the newly created `.env` file and set your credentials:
 
 ```env
 # ===================================================
-# CONFIGURAÇÕES DO TELEGRAM BOT & OLLAMA
+# TELEGRAM BOT & OLLAMA CONFIGURATION
 # ===================================================
 
-# 1. Cole aqui o Token fornecido pelo @BotFather
+# 1. Paste your HTTP API Token from @BotFather
 TELEGRAM_BOT_TOKEN=123456789:ABCDefghIJKLmnOPQRstuvWXYZ
 
-# 2. Defina uma Senha Master de Segurança para o seu bot
-BOT_MASTER_PASSWORD=sua_senha_secreta_aqui
+# 2. Define a Master Security Password to lock your bot
+BOT_MASTER_PASSWORD=your_secure_password_here
 
-# 3. Configurações da API do Ollama
+# 3. Ollama REST API settings
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=llama3.2-vision:11b
 OLLAMA_TIMEOUT=180
 
-# 4. Transcrição de Voz Offline (faster-whisper)
+# 4. Offline Voice Transcription (faster-whisper)
 WHISPER_MODEL_SIZE=base
 WHISPER_DEVICE=cpu
 WHISPER_COMPUTE_TYPE=int8
 
-# 5. Banco de Dados e Histórico
+# 5. Database & Context Window
 DATABASE_PATH=sessions.db
 MAX_CONTEXT_MESSAGES=20
 ```
 
 ---
 
-### 3. Baixar e Rodar o Modelo no Ollama
-Certifique-se de que o serviço do Ollama está rodando no terminal ou em segundo plano:
+### 3. Start the Ollama Service and Pull Your Model
+Ensure the Ollama engine is active:
 
 ```bash
 ollama serve
 ```
 
-Em outro terminal, baixe o modelo multimodal configurado (caso ainda não o tenha):
+In a separate terminal, pull your desired model (if not already downloaded):
 
 ```bash
-# Para Visão Multimodal (Fotos + Texto):
+# For Multimodal Vision (Photos + Text):
 ollama run llama3.2-vision:11b
 
-# Ou para modelo focado em código/texto:
+# Or for code-specialized text:
 ollama run qwen2.5:14b
 ```
 
 ---
 
-### 4. Instalar as Dependências do Projeto
-Recomenda-se criar um ambiente virtual Python:
+### 4. Install Project Dependencies
+Setting up a Python virtual environment is highly recommended:
 
 ```bash
-# Criação do ambiente virtual
+# Create virtual environment
 python -m venv venv
 
-# Ativação no Windows (PowerShell):
+# Activate on Windows (PowerShell):
 .\venv\Scripts\Activate.ps1
 
-# Ativação no Linux / macOS:
+# Activate on Linux / macOS:
 source venv/bin/activate
 
-# Instalação dos pacotes
+# Install dependencies
 pip install -r requirements.txt
 ```
 
 ---
 
-### 5. Iniciar a Aplicação
-Execute o arquivo principal:
+### 5. Launch the Application
+Run the entrypoint script:
 
 ```bash
 python app.py
 ```
-*(Você também pode utilizar `python bot.py`).*
+*(You can also run `python bot.py`).*
 
-Você verá no terminal a confirmação de que o banco SQLite foi inicializado e que o bot está escutando mensagens.
-
----
-
-### 6. Primeiro Acesso e Desbloqueio no Telegram
-1. Abra a conversa com o seu bot recém-criado no Telegram.
-2. Pressione **Iniciar** (ou envie `/start`).
-3. O bot responderá informando que o acesso é **restrito e privado**:
-   > 🔒 **Acesso Restrito:** Por favor, envie a senha master para desbloquear o sistema.
-4. Digite a senha master que você configurou na variável `BOT_MASTER_PASSWORD` do `.env`.
-5. O acesso será liberado e você receberá o menu completo de boas-vindas!
+Your terminal will log database initialization and announce that the polling service is active.
 
 ---
 
-## 📖 Comandos Disponíveis no Telegram
+### 6. First-Time Telegram Unlock
+1. Open the chat with your bot in Telegram.
+2. Press **Start** (or send `/start`).
+3. The bot will respond that access is **locked and private**:
+   > 🔒 **Access Restricted:** Please enter the master password to unlock the system.
+4. Send the password you defined in `BOT_MASTER_PASSWORD`.
+5. Access will be unlocked, and the bot will present the full welcome menu!
 
-Todos os comandos de sessão são protegidos e exigem prévia autenticação:
+---
 
-| Comando | Descrição |
+## 📖 Telegram Commands
+
+All session commands are protected and require prior authentication:
+
+| Command | Description |
 |---|---|
-| `/start` | Exibe o menu principal ou solicita a senha caso não autenticado. |
-| `/ajuda` | Mostra as instruções de uso e atalhos. |
-| `/novo [nome]` | Cria uma nova sessão com contexto isolado no SQLite e a ativa. |
-| `/listar` | Lista todas as suas sessões salvas e o total de mensagens de cada uma. |
-| `/trocar [nome]` | Alterna o ponteiro da conversa para outra sessão existente. |
-| `/renomear [novo_nome]` | Renomeia a sessão atual ativa (com verificação prévia de duplicidade). |
-| `/apagar [nome]` | Exclui permanentemente a sessão e todas as mensagens vinculadas. |
-| `/trocarsenha [nova_senha]` | Altera a senha master de acesso salva no banco de dados. |
+| `/start` | Displays the welcome menu or requests the master password if unauthenticated. |
+| `/ajuda` | Shows available commands and feature instructions. |
+| `/novo [name]` | Creates an isolated session in SQLite and marks it as active. |
+| `/listar` | Lists all your saved sessions and their total message count. |
+| `/trocar [name]` | Switches the active context to another existing session. |
+| `/renomear [new_name]` | Renames the current session (with duplicate name validation). |
+| `/apagar [name]` | Permanently deletes a session and cascades deletion to all its messages. |
+| `/trocarsenha [new_password]` | Updates the master security password stored in the database. |
 
 ---
 
-## 🏗️ Arquitetura do Sistema
+## 🏗️ System Architecture
 
 ```
 local-llm-telegram-bot/
-├── app.py                # Entrypoint principal de execução
-├── bot.py                # Orquestrador do ApplicationBuilder e Handlers do Telegram
-├── handlers.py           # Processamento de texto, fotos, áudios e comandos protegidos
-├── router.py             # Roteador semântico de linguagem natural e despachante
-├── audio_service.py      # Transcrição assíncrona local de áudio (faster-whisper)
-├── database.py           # Persistência SQLite assíncrona (sessões, usuários e senhas)
-├── ollama_client.py      # Cliente HTTP assíncrono para a API REST do Ollama
-├── utils.py              # Extrator de blocos de código e safe_remove_file
-├── config.py             # Carregamento centralizado de variáveis de ambiente
-├── media/                # Evidências e capturas de tela dos testes práticos
-├── obstaculos.md         # Documento técnico de desafios de hardware e aprendizados
-├── test_system.py        # Suíte de testes automatizados com pytest
-└── requirements.txt      # Especificação das dependências do ecossistema
+├── app.py                # Main application entrypoint
+├── bot.py                # ApplicationBuilder orchestrator and Telegram handlers
+├── handlers.py           # Message, photo, audio, and protected command handlers
+├── router.py             # Semantic intent dispatcher and natural language router
+├── audio_service.py      # Async local audio transcription (faster-whisper)
+├── database.py           # Async SQLite persistence (sessions, users, password hash)
+├── ollama_client.py      # Async HTTP client for Ollama's REST API (/api/chat)
+├── utils.py              # Markdown code block extractor and safe_remove_file
+├── config.py             # Centralized settings and environment variables
+├── media/                # Test artifacts and screenshots for documentation
+├── CHALLENGES.md         # Detailed engineering challenges and hardware benchmarks
+├── obstaculos.md         # Engineering challenges document in Portuguese
+├── test_system.py        # Automated test suite with pytest (100% pass)
+└── requirements.txt      # Project dependencies specification
 ```
 
 ---
 
-## 🧪 Testes Automatizados
+## 🧪 Automated Testing
 
-O repositório acompanha uma suíte rigorosa de testes unitários e de integração cobrindo:
-* Autenticação e bloqueio de usuários não autorizados
-* Alteração segura de senha com `/trocarsenha`
-* Ciclo de vida, unicidade e cascata de deleção de sessões
-* Roteador semântico de intenções em linguagem natural
-* Codificação Base64 e envio de imagens para modelos multimodais
-* **Destruição física compulsória de arquivos residuais no disco (`try...finally`)**
+The repository includes a comprehensive test suite covering:
+* Authentication barriers and unauthorized user rejection
+* Secure password updates via `/trocarsenha`
+* Session lifecycle, uniqueness, and cascade message deletion
+* Semantic intent routing from natural language
+* Base64 encoding and payload assembly for multimodal models
+* **Compulsory physical deletion of temporary files on disk (`try...finally`)**
 
-Para executar os testes:
+To run the test suite:
 ```bash
 pytest test_system.py -v
 ```
 
 ---
 
-## 📚 Obstáculos de Engenharia e Limitações
+## 📚 Engineering Challenges & Hardware Limits
 
-Para entender em profundidade os desafios práticos de engenharia, limites de VRAM (12GB), problemas fonéticos no Whisper e comportamentos de alucinação visual observados no Llama 3.2 Vision, leia o documento completo:
+To explore hardware limits (12GB VRAM), Whisper acoustic-phonetic misinterpretations, and visual hallucinations observed in Llama 3.2 Vision, read our technical retrospective:
 
-👉 **[Consulte o obstaculos.md](obstaculos.md)** com prints e análises reais de bancada.
+👉 **[Read CHALLENGES.md](CHALLENGES.md)** *(or [obstaculos.md](obstaculos.md) in Portuguese)* with real bench test screenshots.
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Distribuído sob a licença MIT. Consulte o arquivo de licença para obter mais informações.
+Distributed under the MIT License. See `LICENSE` for details.
